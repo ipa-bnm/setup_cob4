@@ -49,6 +49,10 @@ fi
 #### retrieve client_list variables
 source /u/robot/git/setup_cob4/helper_client_list.sh
 
+function get_search_domain () {
+  grep search /etc/resolv.conf | sed -e "s/search //"
+}
+
 #### DEFINE SPECIFIC LIST OF PCs
 function query_pc_list {
   echo -e "\n${green}INFO:QUERY_PC_LIST${NC}\n"
@@ -140,7 +144,7 @@ function SetupRobotUser {
 function SetupMimicUser {
   echo -e "\n${green}INFO:Setup Mimic User${NC}\n"
 
-  query_pc_list "$robot_name-h1"
+  query_pc_list "h1"
   pc_head=$LIST
   if [ -z "$pc_head" ]; then
     echo "no head pc, skipping setup mimic user"
@@ -391,7 +395,7 @@ function SyncPackages {
 if [[ "$1" =~ "--help" ]]; then echo -e $usage; exit 0; fi
 
 #### check prerequisites
-robot_name="${HOSTNAME//-b1}"
+robot_name=$(get_search_domain)
 ros_distro='indigo'
 if [ $(lsb_release -sc) == "trusty" ]; then
   ros_distro='indigo'

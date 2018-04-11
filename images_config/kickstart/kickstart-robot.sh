@@ -16,7 +16,7 @@ function SetLocalAptCacher {
     unset http_proxy
     touch /etc/apt/apt.conf.d/01proxy
 
-    SERVERNAME=$(echo ${HOSTNAME%-*}-b1)
+    SERVERNAME="b1"
     if grep -q 'Acquire::http { Proxy "http://10.0.1.1:3142"; };' /etc/apt/apt.conf.d/01proxy ; then
         echo "Proxy already in /etc/apt/apt.conf.d/01proxy, skipping SetLocalAptCacher"
     fi 
@@ -75,9 +75,8 @@ function NFSSetup {
         fi
     elif [ "$INSTALL_TYPE" == "slave" ]; then
         apt-get install nfs-common autofs -y
-        HOSTNAME=$(cat /etc/hostname)
 
-        SERVERNAME=$(echo ${HOSTNAME%-*}-b1)
+        SERVERNAME="b1"
         echo $SERVERNAME
         touch /etc/auto.direct
         if grep -q "/u  -fstype=nfs4    $SERVERNAME:/" /etc/auto.direct && grep -q "/-  /etc/auto.direct" /etc/auto.master ; then
@@ -201,8 +200,7 @@ function ChronySetup {
         wget -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/chrony_server
 
     elif [ "$INSTALL_TYPE" == "slave" ]; then
-        HOSTNAME=$(cat /etc/hostname)
-        SERVERNAME=$(echo ${HOSTNAME%-*}-b1)
+        SERVERNAME="b1"
         wget -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/chrony_client
         sed -i "s/server_ip/${SERVERNAME}/g" /etc/chrony/chrony.conf
     fi
@@ -241,16 +239,15 @@ function SetupDefaultBashEnv {
         wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.b
 
     elif [ "$INSTALL_TYPE" == "slave" ]; then
-        ROBOT=$(echo ${HOSTNAME%-*})
-        if [[ "$HOSTNAME" == "$ROBOT-t"* ]]; then
+        if [[ "$HOSTNAME" == "t"* ]]; then
             wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.t
         fi
 
-        if [[ "$HOSTNAME" == "$ROBOT-h"* ]]; then
+        if [[ "$HOSTNAME" == "h"* ]]; then
             wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.h
         fi
 
-        if [[ "$HOSTNAME" == "$ROBOT-s"* ]]; then
+        if [[ "$HOSTNAME" == "s"* ]]; then
             wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.s
         fi
     fi
@@ -298,12 +295,12 @@ function SetupEtcHosts {
     ROBOT_NUM=$(echo ${ROBOTNAME##*-})
 
     PC_LS=(
-    "10.4.${ROBOT_NUM}.41	${ROBOTNAME}-h1"
-    "10.4.${ROBOT_NUM}.31	${ROBOTNAME}-s1"
-    "10.4.${ROBOT_NUM}.23	${ROBOTNAME}-t3"
-    "10.4.${ROBOT_NUM}.22	${ROBOTNAME}-t2"
-    "10.4.${ROBOT_NUM}.21	${ROBOTNAME}-t1"
-    "10.4.${ROBOT_NUM}.11	${ROBOTNAME}-b1"
+    "10.4.${ROBOT_NUM}.41	h1"
+    "10.4.${ROBOT_NUM}.31	s1"
+    "10.4.${ROBOT_NUM}.23	t3"
+    "10.4.${ROBOT_NUM}.22	t2"
+    "10.4.${ROBOT_NUM}.21	t1"
+    "10.4.${ROBOT_NUM}.11	b1"
     )
 
     for ((i = 0; i < ${#PC_LS[@]}; i++))
@@ -388,8 +385,7 @@ function InstallAptCacher {
         sed -i 's!Acquire::http::Proxy "http://10.0.1.1:3142/";!!g' /etc/apt/apt.conf
     fi
 
-    HOSTNAME=$(cat /etc/hostname)
-    SERVERNAME=$(echo ${HOSTNAME%-*}-b1)
+    SERVERNAME="b1"
     if [ "$INSTALL_TYPE" == "master" ]; then
         apt-get install apt-cacher-ng -y
         sed -i 's/\# PassThroughPattern: .\*/PassThroughPattern: .\*/g' /etc/apt-cacher-ng/acng.conf
