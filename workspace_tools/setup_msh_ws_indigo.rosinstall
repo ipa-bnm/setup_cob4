@@ -1,0 +1,16 @@
+- git:
+    local-name: unity_maven
+    uri: git@github.com:unity-robotics/unity_maven
+    version: master
+- git:
+    local-name: msh
+    uri: git@github.com:unity-robotics/msh.git
+    version: indigo_dev
+- git:
+    local-name: msh_common
+    uri: git@github.com:unity-robotics/msh_common.git
+    version: indigo_dev
+- git:
+    local-name: msh_voice_control
+    uri: git@github.com:unity-robotics/msh_voice_control.git
+    version: indigo_dev

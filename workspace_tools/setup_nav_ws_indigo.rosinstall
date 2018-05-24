@@ -1,0 +1,36 @@
+- git:
+    local-name: ipa_license_verifier
+    uri: git@github.com:ipa320/ipa_license_verifier.git
+    version: indigo_dev
+- git:
+    local-name: ipa_navigation
+    uri: git@github.com:ipa320/ipa_navigation.git
+    version: indigo_dev
+- git:
+    local-name: ipa_navigation_common
+    uri: git@github.com:ipa320/ipa_navigation_common.git
+    version: indigo_dev
+- git:
+    local-name: ipa_navigation_driver
+    uri: git@github.com:ipa320/ipa_navigation_driver.git
+    version: indigo_dev
+- git:
+    local-name: ipa_navigation_localization
+    uri: git@github.com:ipa320/ipa_navigation_localization.git
+    version: indigo_dev
+- git:
+    local-name: ipa_navigation_perception
+    uri: git@github.com:ipa320/ipa_navigation_perception.git
+    version: indigo_dev
+- git:
+    local-name: ipa_navigation_planning
+    uri: git@github.com:ipa320/ipa_navigation_planning.git
+    version: indigo_dev
+- git:
+    local-name: ipa_navigation_sandbox
+    uri: git@github.com:ipa320/ipa_navigation_sandbox.git
+    version: indigo_dev
+- git:
+    local-name: cob_karto
+    uri: git@github.com:ipa320/cob_karto.git
+    version: indigo_dev

@@ -1,0 +1,60 @@
+- git:
+    local-name: canopen_test_utils
+    uri: https://github.com/ipa320/canopen_test_utils
+    version: indigo-devel
+- git:
+    local-name: cob_command_tools
+    uri: git@github.com:ipa320/cob_command_tools
+    version: indigo_dev
+- git:
+    local-name: cob_common
+    uri: git@github.com:ipa320/cob_common
+    version: indigo_dev
+- git:
+    local-name: cob_control
+    uri: git@github.com:ipa320/cob_control
+    version: kinetic_dev
+- git:
+    local-name: cob_docking
+    uri: git@github.com:ipa320/cob_docking
+    version: indigo_dev
+- git:
+    local-name: cob_driver
+    uri: git@github.com:ipa320/cob_driver
+    version: indigo_dev
+- git:
+    local-name: cob_navigation
+    uri: git@github.com:ipa320/cob_navigation
+    version: indigo_dev
+- git:
+    local-name: cob_perception_common
+    uri: git@github.com:ipa320/cob_perception_common
+    version: indigo_dev
+- git:
+    local-name: realsense
+    uri: git@github.com:ipa320/realsense
+    version: indigo-devel
+- git:
+    local-name: sick_flexisoft
+    uri: git@github.com:ipa320/sick_flexisoft
+    version: indigo_dev
+- git:
+    local-name: unity_calibration_data
+    uri: git@github.com:unity-robotics/unity_calibration_data
+    version: indigo-devel
+- git:
+    local-name: unity_environments
+    uri: git@github.com:unity-robotics/unity_environments
+    version: indigo-devel
+- git:
+    local-name: unity_robots
+    uri: git@github.com:unity-robotics/unity_robots
+    version: indigo-devel
+- git:
+    local-name: unity_simulation
+    uri: git@github.com:unity-robotics/unity_simulation
+    version: indigo-devel
+- git:
+    local-name: unity_supported_robots
+    uri: git@github.com:unity-robotics/unity_supported_robots
+    version: indigo-devel
