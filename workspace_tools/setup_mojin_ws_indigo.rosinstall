@@ -1,0 +1,56 @@
+- git:
+    local-name: cob_people_perception
+    uri: git@github.com:ipa320/cob_people_perception
+    version: indigo_dev
+- git:
+    local-name: executive_smach
+    uri: git@github.com:mojin-robotics/executive_smach
+    version: indigo-devel
+- git:
+    local-name: pointcloud_to_laserscan
+    uri: git@github.com:ipa320/pointcloud_to_laserscan
+    version: indigo-devel
+- git:
+    local-name: slack-ros-pkg
+    uri: git@github.com:ipa320/slack-ros-pkg
+    version: master
+- git:
+    local-name: mojin_analytics
+    uri: git@github.com:mojin-robotics/mojin_analytics
+    version: indigo-devel
+- git:
+    local-name: mojin_application
+    uri: git@github.com:mojin-robotics/mojin_application
+    version: indigo-devel
+- git:
+    local-name: mojin_behavior
+    uri: git@github.com:mojin-robotics/mojin_behavior
+    version: indigo-devel
+- git:
+    local-name: mojin_common
+    uri: git@github.com:mojin-robotics/mojin_common
+    version: indigo-devel
+- git:
+    local-name: mojin_maven
+    uri: git@github.com:mojin-robotics/mojin_maven
+    version: indigo-devel
+- git:
+    local-name: mojin_media
+    uri: git@github.com:mojin-robotics/mojin_media
+    version: indigo-devel
+- git:
+    local-name: mojin_navigation
+    uri: git@github.com:mojin-robotics/mojin_navigation
+    version: indigo-devel
+- git:
+    local-name: mojin_perception
+    uri: git@github.com:mojin-robotics/mojin_perception
+    version: indigo-devel
+- git:
+    local-name: mojin_tools
+    uri: git@github.com:mojin-robotics/mojin_tools
+    version: indigo-devel
+- git:
+    local-name: mojin_voice_control
+    uri: git@github.com:mojin-robotics/mojin_voice_control
+    version: indigo-devel

@@ -1,6 +1,10 @@
 - git:
     local-name: canopen_test_utils
-    uri: https://github.com/ipa320/canopen_test_utils
+    uri: git@github.com:ipa320/canopen_test_utils
+    version: indigo-devel
+- git:
+    local-name: cob_base_calibration
+    uri: git@github.com:mojin-robotics/cob_base_calibration
     version: indigo-devel
 - git:
     local-name: cob_command_tools
@@ -39,22 +43,22 @@
     uri: git@github.com:ipa320/sick_flexisoft
     version: indigo_dev
 - git:
-    local-name: unity_calibration_data
-    uri: git@github.com:unity-robotics/unity_calibration_data
+    local-name: mojin_calibration_data
+    uri: git@github.com:mojin-robotics/mojin_calibration_data
     version: indigo-devel
 - git:
-    local-name: unity_environments
-    uri: git@github.com:unity-robotics/unity_environments
+    local-name: mojin_environments
+    uri: git@github.com:mojin-robotics/mojin_environments
     version: indigo-devel
 - git:
-    local-name: unity_robots
-    uri: git@github.com:unity-robotics/unity_robots
+    local-name: mojin_robots
+    uri: git@github.com:mojin-robotics/mojin_robots
     version: indigo-devel
 - git:
-    local-name: unity_simulation
-    uri: git@github.com:unity-robotics/unity_simulation
+    local-name: mojin_simulation
+    uri: git@github.com:mojin-robotics/mojin_simulation
     version: indigo-devel
 - git:
-    local-name: unity_supported_robots
-    uri: git@github.com:unity-robotics/unity_supported_robots
+    local-name: mojin_supported_robots
+    uri: git@github.com:mojin-robotics/mojin_supported_robots
     version: indigo-devel

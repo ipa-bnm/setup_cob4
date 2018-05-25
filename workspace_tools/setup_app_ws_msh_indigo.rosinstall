@@ -1,0 +1,8 @@
+- git:
+    local-name: msh
+    uri: git@github.com:mojin-robotics/msh
+    version: indigo-devel
+- git:
+    local-name: msh_gui
+    uri: git@github.com:mojin-robotics/msh_gui
+    version: indigo-devel
