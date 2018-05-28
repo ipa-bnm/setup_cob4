@@ -32,7 +32,11 @@ function setup_ws {
     if [ ! -f .rosinstall ]; then
         wstool init
     fi
-    wstool merge -y /tmp/setup_workspace/setup_`basename $new_ws`_${ROS_DISTRO}.rosinstall
+    wstool merge -y $setup_dir/setup_`basename $new_ws`_${ROS_DISTRO}.rosinstall
+    if [ $? -ne 0 ]; then
+        echo "could not setup $new_ws workspace"
+        exit -1
+    fi
     wstool update -j9
     
     ############################
@@ -102,10 +106,8 @@ else
     echo "using mode: $mode"
 fi
 
-# we'll start with cloning msh manually as it contains the rosinstall files for all workspaces
-if [ ! -d /tmp/setup_workspace ]; then
-    git clone git@github.com:unity-robotics/msh.git /tmp/setup_workspace
-fi
+# we'll store the current execution path to find the rosinstall files for all workspaces
+setup_dir=$PWD
 
 if [ "$mode" == "robot" ]; then
     echo "Installation on robot!"
@@ -116,7 +118,7 @@ if [ "$mode" == "robot" ]; then
     export -f setup_ws
     export -f install_dependencies
     su robot -c "setup_ws ~/git/care-o-bot /opt/ros/${ROS_DISTRO}/setup.bash"
-    setup_ws ~/git/cob_ws /u/robot/git/care-o-bot/devel/setup.bash
+    setup_ws ~/git/nav_ws /u/robot/git/care-o-bot/devel/setup.bash
 elif [ "$mode" == "local" ]; then
     echo "Installation on local computer"
     rosdep update
@@ -129,13 +131,13 @@ elif [ "$mode" == "local" ]; then
         echo "WARN: skipping apt-get upgrade because user does not have sudo rights"
     fi
     setup_ws ~/git/robot_ws /opt/ros/${ROS_DISTRO}/setup.bash
-    setup_ws ~/git/cob_ws ~/git/robot_ws/devel/setup.bash
+    setup_ws ~/git/nav_ws ~/git/robot_ws/devel/setup.bash
 else
 	echo "ERROR: invalid mode: $mode"
 	exit 3
 fi
 
-setup_ws ~/git/nav_ws ~/git/cob_ws/devel/setup.bash
-setup_ws ~/git/msh_ws ~/git/nav_ws/devel/setup.bash
-setup_ws ~/git/care-o-bot ~/git/msh_ws/devel/setup.bash
+setup_ws ~/git/mojin_ws ~/git/nav_ws/devel/setup.bash
+setup_ws ~/git/apps_ws ~/git/mojin_ws/devel/setup.bash
+setup_ws ~/git/care-o-bot ~/git/apps_ws/devel/setup.bash
 
