@@ -2,6 +2,7 @@
 set -e
 
 function setup_ws {
+    set -e
     new_ws=$1
     chained_ws=$2
     echo ""
@@ -32,7 +33,15 @@ function setup_ws {
     if [ ! -f .rosinstall ]; then
         wstool init
     fi
-    wstool merge -y $setup_dir/setup_`basename $new_ws`_${ROS_DISTRO}.rosinstall
+    if [ -z ${3+x} ]; then
+        rosinstall=$setup_dir/setup_`basename $new_ws`_${ROS_DISTRO}.rosinstall
+    else
+        echo "overwrite app_ws rosinstall with $3"
+        rosinstall=$3
+    fi
+
+    echo "create workspace with $rosinstall"
+    wstool merge -y $rosinstall
     if [ $? -ne 0 ]; then
         echo "could not setup $new_ws workspace"
         exit -1
@@ -62,11 +71,12 @@ function install_dependencies {
     set +e
     if (rosdep check --from-path src -i -y); then
         echo "rosdep satisfied"
+        set -e
         return
     else
         echo "need to install packages"
     fi
-    # enalbe script cancelation on firts error
+    # enable script cancelation on firts error
     set -e
 
     if [ "$mode" == "robot" ]; then
@@ -92,9 +102,9 @@ function install_dependencies {
 ############
 ### main ###
 ############
-if [ $# -ne 1 ]; then
+if [ $# -ne 2 ]; then
     echo "ERROR: wrong number of arguments, expecting:"
-    echo "setup_workspace.sh [local|robot]"
+    echo "setup_workspace.sh [local|robot] [msh|hdg|...]"
     exit 1
 fi
 
@@ -108,6 +118,18 @@ fi
 
 # we'll store the current execution path to find the rosinstall files for all workspaces
 setup_dir=$PWD
+
+# choose application
+#echo "choose one from $setup_dir"
+
+rosinstall_app_ws="$setup_dir/setup_app_ws_$2_${ROS_DISTRO}.rosinstall"
+
+if [[ -f $rosinstall_app_ws ]]; then
+    echo "setting up app_ws for $2"
+else
+    echo "ERROR: rosinstall file for app_ws $2 not found"
+    exit 3
+fi
 
 if [ "$mode" == "robot" ]; then
     echo "Installation on robot!"
@@ -138,6 +160,6 @@ else
 fi
 
 setup_ws ~/git/mojin_ws ~/git/nav_ws/devel/setup.bash
-setup_ws ~/git/apps_ws ~/git/mojin_ws/devel/setup.bash
-setup_ws ~/git/care-o-bot ~/git/apps_ws/devel/setup.bash
+setup_ws ~/git/app_ws ~/git/mojin_ws/devel/setup.bash $rosinstall_app_ws
+setup_ws ~/git/care-o-bot ~/git/app_ws/devel/setup.bash
 
