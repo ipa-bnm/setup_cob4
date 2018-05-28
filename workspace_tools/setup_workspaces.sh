@@ -119,9 +119,6 @@ fi
 # we'll store the current execution path to find the rosinstall files for all workspaces
 setup_dir=$PWD
 
-# choose application
-#echo "choose one from $setup_dir"
-
 rosinstall_app_ws="$setup_dir/setup_app_ws_$2_${ROS_DISTRO}.rosinstall"
 
 if [[ -f $rosinstall_app_ws ]]; then
@@ -137,6 +134,7 @@ if [ "$mode" == "robot" ]; then
     su robot -c "rosdep update"
     su robot -c "sudo apt-get update"
     su robot -c "sudo apt-get upgrade"
+    export setup_dir
     export -f setup_ws
     export -f install_dependencies
     su robot -c "setup_ws ~/git/care-o-bot /opt/ros/${ROS_DISTRO}/setup.bash"
