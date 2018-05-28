@@ -23,8 +23,8 @@
     uri: git@github.com:mojin-robotics/mojin_application
     version: indigo-devel
 - git:
-    local-name: mojin_behavior
-    uri: git@github.com:mojin-robotics/mojin_behavior
+    local-name: mojin_behaviors
+    uri: git@github.com:mojin-robotics/mojin_behaviors
     version: indigo-devel
 - git:
     local-name: mojin_common
