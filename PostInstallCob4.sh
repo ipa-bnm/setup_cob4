@@ -12,6 +12,8 @@ INFO: This script is a helper tool for the setup and installation of Care-O-bot:
 3. Setup mimic user\n
 4. Setup devices (e.g. udev for laser scanners)\n
 5. Install upstart\n
+6. Setup msh user and ROS workspace\n
+7. SyncPackages
 99. Full installation\n
 EOF
 )
@@ -63,7 +65,7 @@ function query_pc_list {
   fi
 }
 
-#### Setup root user
+#### SETUP ROOT USER
 function SetupRootUser {
   echo -e "\n${green}INFO:setup root user${NC}\n"
 
@@ -100,7 +102,7 @@ function SetupRootUser {
   echo "setup root user done"
 }
 
-#### Setup Robot user
+#### SETUP ROBOT USER
 function SetupRobotUser {
   echo -e "\n${green}INFO:Setup Robot User${NC}\n"
 
@@ -134,7 +136,7 @@ function SetupRobotUser {
   echo "setup robot user done"
 }
 
-#### SETUP MIMIC
+#### SETUP MIMIC USER
 function SetupMimicUser {
   echo -e "\n${green}INFO:Setup Mimic User${NC}\n"
 
@@ -224,6 +226,21 @@ EOF"
   echo "setup mimic user done"
 }
 
+#### SETUP MSH USER
+function SetupMshUser {
+  echo -e "\n${green}INFO:Setup MSH User${NC}\n"
+
+  #add the new user
+  /u/robot/git/setup_cob4/cob-adduser msh
+
+  #setup workspace
+  echo -e "\nWhat app_ws would you like to install? (msh/hdg)?"
+  read answer
+  su msh -c "/u/robot/git/setup_cob4/workspace_tools/setup_workspaces.sh robot $answer"
+
+  echo "setup msh user done"
+}
+
 #### INSTALL UPSTART
 function InstallUpstart {
   echo -e "\n${green}INFO: Install Upstart${NC}\n"
@@ -303,7 +320,7 @@ function InstallUpstart {
   echo "install upstart done"
 }
 
-#### SETUP SCANNERS
+#### SETUP DEVICES
 function SetupDevices {
   echo -e "\n${green}INFO: Setup udev rules for the scanners ${NC}\n"
 
@@ -356,6 +373,15 @@ function SetupDevices {
   sudo sed -i -re "s/(ScanRightAttr2=).*/\1'${ATTRSSerialR}'/g" /etc/init.d/udev_cob.sh
 
   echo "setup devices done"
+}
+
+#### SYNC PACKAGES
+function SyncPackages {
+  echo -e "\n${green}INFO: Sync Packages${NC}\n"
+
+  /u/robot/git/setup_cob4/cob-pcs/sync_packages.sh
+
+  echo "sync packages done"
 }
 
 ########################################################################
@@ -419,12 +445,18 @@ elif [[ "$choice" == 4 ]]; then
   SetupDevices
 elif [[ "$choice" == 5 ]]; then
   InstallUpstart
+elif [[ "$choice" == 6 ]]; then
+  SetupMshUser
+elif [[ "$choice" == 7 ]]: then
+  SyncPackages
 elif [[ "$choice" == 99 ]]; then
   SetupRootUser
   SetupRobotUser
   SetupMimicUser
   SetupDevices
   InstallUpstart
+  SetupMshUser
+  SyncPackages
 else
   echo -e "\n${red}INFO: Invalid install option. Exiting. ${NC}\n"
 fi
