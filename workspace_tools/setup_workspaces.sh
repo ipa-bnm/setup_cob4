@@ -119,12 +119,15 @@ fi
 # we'll store the current execution path to find the rosinstall files for all workspaces
 setup_dir=$PWD
 
+# check if ROS_DISTRO is sourced
+: ${ROS_DISTRO:?"not sourced"}
+
 rosinstall_app_ws="$setup_dir/setup_app_ws_$2_${ROS_DISTRO}.rosinstall"
 
 if [[ -f $rosinstall_app_ws ]]; then
     echo "setting up app_ws for $2"
 else
-    echo "ERROR: rosinstall file for app_ws $2 not found"
+    echo "ERROR: rosinstall file for app_ws $2 not found ($rosinstall_app_ws)"
     exit 3
 fi
 
