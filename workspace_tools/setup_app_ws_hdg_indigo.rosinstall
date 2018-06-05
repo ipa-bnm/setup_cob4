@@ -1,0 +1,4 @@
+- git:
+    local-name: hdg
+    uri: git@github.com:mojin-robotics/hdg
+    version: indigo-devel

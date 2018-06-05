@@ -5,5 +5,5 @@ roscore:
 bringup:
   session_name: bringup
   user: robot
-  command: "roslaunch unity_bringup robot.launch"
+  command: "roslaunch mojin_bringup robot.launch"
   pre_condition: "until /opt/ros/myrosdistro/env.sh rostopic list; do sleep 1; done"

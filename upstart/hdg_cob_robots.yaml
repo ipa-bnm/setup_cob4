@@ -5,7 +5,7 @@ roscore:
 bringup:
   session_name: bringup
   user: msh
-  command: "roslaunch msh_bringup all.launch pkg_bringup:=\`rospack find cob_bringup\`"
+  command: "roslaunch hdg_bringup all.launch pkg_bringup:=\`rospack find cob_bringup\`"
   pre_condition: "until /opt/ros/myrosdistro/env.sh rostopic list; do sleep 1; done"
 sm:
   session_name: sm
