@@ -153,8 +153,8 @@ elif [ "$mode" == "local" ]; then
     setup_ws ~/git/robot_ws /opt/ros/${ROS_DISTRO}/setup.bash
     setup_ws ~/git/nav_ws ~/git/robot_ws/devel/setup.bash
 else
-	echo "ERROR: invalid mode: $mode"
-	exit 3
+    echo "ERROR: invalid mode: $mode"
+    exit 3
 fi
 
 setup_ws ~/git/mojin_ws ~/git/nav_ws/devel/setup.bash
