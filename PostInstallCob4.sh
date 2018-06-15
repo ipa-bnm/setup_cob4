@@ -451,7 +451,7 @@ elif [[ "$choice" == 5 ]]; then
   InstallUpstart
 elif [[ "$choice" == 6 ]]; then
   SetupMshUser
-elif [[ "$choice" == 7 ]]: then
+elif [[ "$choice" == 7 ]]; then
   SyncPackages
 elif [[ "$choice" == 99 ]]; then
   SetupRootUser
