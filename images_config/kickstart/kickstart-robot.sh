@@ -323,7 +323,7 @@ function InstallCandumpTools {
 #Not possible because there is no ftp server or something else availible. Just the newest version is on their download page
 function InstallNoMachine {
     printHeader "InstallNoMachine"
-    NOMACHINE_VERSION=6.0.66_2
+    NOMACHINE_VERSION=6.2.4_1
     wget -O /root/nomachine_${NOMACHINE_VERSION}_amd64.deb http://download.nomachine.com/download/6.0/Linux/nomachine_${NOMACHINE_VERSION}_amd64.deb
     dpkg -i /root/nomachine_${NOMACHINE_VERSION}_amd64.deb
 }
