@@ -106,6 +106,9 @@ chmod +w -R ~/ubuntu_files
 echo en >> ~/ubuntu_files/isolinux/lang
 cp -r ~/git/setup_cob4/images_config/kickstart ~/ubuntu_files/
 cp -r ~/git/setup_cob4/images_config/preseed ~/ubuntu_files/
+cp -r ~/git/setup_cob4/cob-pcs ~/ubuntu_files/
+cp -r ~/git/setup_cob4/scripts ~/ubuntu_files/
+cp -r ~/git/setup_cob4/udev_rules ~/ubuntu_files/
 cp ~/git/setup_cob4/images_config/isolinux/txt-16.04.cfg ~/ubuntu_files/isolinux/txt.cfg
 mkisofs -D -r -V "Ubuntu-16.04-Care-O-bot" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ~/ubuntu-16.04-care-o-bot.iso ~/ubuntu_files
 ```

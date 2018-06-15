@@ -197,11 +197,10 @@ function ChronySetup {
     printHeader "ChronySetup"
     apt-get install chrony -y -f
     if [ "$INSTALL_TYPE" == "master" ]; then
-        wget -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/chrony_server
-
+        cp /media/cdrom/cob-pcs/chrony_server /etc/chrony/chrony.conf
     elif [ "$INSTALL_TYPE" == "slave" ]; then
         SERVERNAME="b1"
-        wget -O /etc/chrony/chrony.conf https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/chrony_client
+        cp /media/cdrom/cob-pcs/chrony_client /etc/chrony/chrony.conf
         sed -i "s/server_ip/${SERVERNAME}/g" /etc/chrony/chrony.conf
     fi
     
@@ -216,13 +215,13 @@ function ChronySetup {
 #udev rules
 function SetupUdevRules {
     printHeader "SetupUdevRules"
-    wget -O /etc/udev/rules.d/98-led.rules https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/udev_rules/98-led.rules
+    cp /media/cdrom/udev_rules/98-led.rules /etc/udev/rules.d/98-led.rules
     if [ "$INSTALL_TYPE" == "master" ]; then
-            wget -O /etc/init.d/udev_cob.sh https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/udev_rules/udev_cob.sh
-            chmod +x /etc/init.d/udev_cob.sh
-            update-rc.d udev_cob.sh defaults
+        cp /media/cdrom/udev_rules/udev_cob.sh /etc/init.d/udev_cob.sh
+        chmod +x /etc/init.d/udev_cob.sh
+        update-rc.d udev_cob.sh defaults
     elif [ "$INSTALL_TYPE" == "slave" ]; then
-        wget -O /etc/udev/rules.d/99-gripper.rules https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/udev_rules/99-gripper.rules
+        cp /media/cdrom/udev_rules/99-gripper.rules /etc/udev/rules.d/99-gripper.rules
     fi
 }
 
@@ -236,19 +235,18 @@ function InstallGitLFS {
 function SetupDefaultBashEnv {
     printHeader "SetupDefaultBashEnv"
     if [ "$INSTALL_TYPE" == "master" ]; then
-        wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.b
-
+        cp /media/cdrom/cob-pcs/cob.bash.bashrc.b /etc/cob.bash.bashrc
     elif [ "$INSTALL_TYPE" == "slave" ]; then
         if [[ "$HOSTNAME" == "t"* ]]; then
-            wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.t
+            cp /media/cdrom/cob-pcs/cob.bash.bashrc.t /etc/cob.bash.bashrc
         fi
 
         if [[ "$HOSTNAME" == "h"* ]]; then
-            wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.h
+            cp /media/cdrom/cob-pcs/cob.bash.bashrc.h /etc/cob.bash.bashrc
         fi
 
         if [[ "$HOSTNAME" == "s"* ]]; then
-            wget -O /etc/cob.bash.bashrc https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/cob.bash.bashrc.s
+            cp /media/cdrom/cob-pcs/cob.bash.bashrc.s /etc/cob.bash.bashrc
         fi
     fi
 }
@@ -256,7 +254,7 @@ function SetupDefaultBashEnv {
 function InstallShutdown {
     printHeader "InstallShutdown"
     if [ "$INSTALL_TYPE" == "master" ]; then
-        wget -O /usr/sbin/cob-shutdown https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/scripts/cob-shutdown
+        cp /media/cdrom/scripts/cob-shutdown /usr/sbin/cob-shutdown
         chmod +x /usr/sbin/cob-shutdown
 
         sed -i 's/etc\/acpi\/powerbtn.sh/usr\/sbin\/cob-shutdown/g' /etc/acpi/events/powerbtn
@@ -273,9 +271,9 @@ function NetworkSetup {
     INTERFACE=`ip link | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}'`
 
     if [ "$INSTALL_TYPE" == "master" ]; then
-        wget -O /etc/network/interfaces.backup https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/networkInterfacesMaster
+        cp /media/cdrom/cob-pcs/networkInterfacesMaster /etc/network/interfaces.backup
     elif [ "$INSTALL_TYPE" == "slave" ]; then
-        wget -O /etc/network/interfaces.backup https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/cob-pcs/networkInterfacesSlave
+        cp /media/cdrom/cob-pcs/networkInterfacesSlave /etc/network/interfaces.backup
     fi
 
     sed -i "s/eth0/$INTERFACE/g" /etc/network/interfaces.backup
@@ -315,7 +313,7 @@ function SetupEtcHosts {
 
 function InstallCandumpTools {
     printHeader "InstallCandumpTools"
-    wget -O /usr/local/bin/socket_buffer.py https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/scripts/socket_buffer.py
+    cp /media/cdrom/scripts/socket_buffer.py /usr/local/bin/socket_buffer.py
     chmod +x /usr/local/bin/socket_buffer.py
 }
 
@@ -341,7 +339,7 @@ function InstallNetData {
 function InstallCobCommand {
     printHeader "InstallCobCommand"
     if [ "$INSTALL_TYPE" == "master" ]; then
-        wget -O /usr/sbin/cob-command https://raw.githubusercontent.com/mojin-robotics/setup_cob4/master/scripts/cob-command
+        cp /media/cdrom/scripts/cob-command /usr/sbin/cob-command
         chmod +x /usr/sbin/cob-command
         sh -c 'echo "%users ALL=NOPASSWD:/usr/sbin/cob-command"' | sed -i -e "\|%users ALL=NOPASSWD:/usr/sbin/cob-command|h; \${x;s|%users ALL=NOPASSWD:/usr/sbin/cob-command||;{g;t};a\\" -e "%users ALL=NOPASSWD:/usr/sbin/cob-command" -e "}" /etc/sudoers
     fi
