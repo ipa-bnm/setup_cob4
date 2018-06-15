@@ -116,7 +116,7 @@ sudo apt-get install syslinux-utils
 isohybrid ~/ubuntu-1X.04-care-o-bot.iso
 ```
 
-Plugin USB Stick and create startup disk
+Plugin USB Stick and create startup disk, e.g. using `etcher` (see https://etcher.io/).
 
 
 ### 6. Cleanup <a id="Cleanup"/>
