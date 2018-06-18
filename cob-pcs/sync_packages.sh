@@ -15,7 +15,7 @@ source /u/robot/git/setup_cob4/helper_client_list.sh
 
 declare -a commands=(
 "sudo apt-get update"
-"sudo apt-get install -y $packages"
+"sudo apt-get install -y --allow-unauthenticated $packages"
 "sudo apt-get upgrade -y"
 "sudo apt-get autoremove -y"
 )
