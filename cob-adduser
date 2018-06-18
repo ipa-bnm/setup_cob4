@@ -77,6 +77,9 @@ if [ "$1" != "" ]; then
 		sudo -u $1 ssh $1@$i 'exit'
 	done
 
+	# add github.com to known_hosts
+	sudo su -c "ssh-keyscan -H github.com >> /u/$1/.ssh/known_hosts" $1
+
 	if [ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
 		sudo su -c "rosdep init"
 	fi
