@@ -428,7 +428,15 @@ if [ ! -d /u/robot/git/setup_cob4 ]; then
   mkdir /u/robot/git
   git clone https://github.com/mojin-robotics/setup_cob4 /u/robot/git/setup_cob4
 else
-  git --work-tree=/u/robot/git/setup_cob4 --git-dir=/u/robot/git/setup_cob4/.git pull origin master
+  echo -e "\nDo you want to pull setup_cob4 from mojin-robotics master branch (y/n)?"
+  read answer
+
+  if echo "$answer" | grep -iq "^y" ;then
+    echo -e "\nUpdating setup_cob4 from mojin-robotics master branch..."
+    git --work-tree=/u/robot/git/setup_cob4 --git-dir=/u/robot/git/setup_cob4/.git pull https://github.com/mojin-robotics/setup_cob4 master
+  else
+    echo -e "\nNot updating setup_cob4"
+  fi
 fi
 
 
