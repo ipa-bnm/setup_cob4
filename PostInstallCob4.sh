@@ -12,7 +12,7 @@ INFO: This script is a helper tool for the setup and installation of Care-O-bot:
 3. Setup mimic user\n
 4. Setup devices (e.g. udev for laser scanners)\n
 5. Install upstart\n
-6. Setup msh user and ROS workspace\n
+6. Setup mojin user and ROS workspace\n
 7. SyncPackages
 99. Full installation\n
 EOF
@@ -230,19 +230,19 @@ EOF"
   echo "setup mimic user done"
 }
 
-#### SETUP MSH USER
-function SetupMshUser {
-  echo -e "\n${green}INFO:Setup MSH User${NC}\n"
+#### SETUP MOJIN USER
+function SetupMojinUser {
+  echo -e "\n${green}INFO:Setup Mojin User${NC}\n"
 
   #add the new user
-  /u/robot/git/setup_cob4/cob-adduser msh
+  /u/robot/git/setup_cob4/cob-adduser mojin
 
   #setup workspace
   echo -e "\nWhat app_ws would you like to install? (msh/hdg)?"
   read answer
-  su msh -c "/u/robot/git/setup_cob4/workspace_tools/setup_workspaces.sh robot $answer"
+  su mojin -c "/u/robot/git/setup_cob4/workspace_tools/setup_workspaces.sh robot $answer"
 
-  echo "setup msh user done"
+  echo "setup mojin user done"
 }
 
 #### INSTALL UPSTART
@@ -450,7 +450,7 @@ elif [[ "$choice" == 4 ]]; then
 elif [[ "$choice" == 5 ]]; then
   InstallUpstart
 elif [[ "$choice" == 6 ]]; then
-  SetupMshUser
+  SetupMojinUser
 elif [[ "$choice" == 7 ]]; then
   SyncPackages
 elif [[ "$choice" == 99 ]]; then
@@ -459,7 +459,7 @@ elif [[ "$choice" == 99 ]]; then
   SetupMimicUser
   SetupDevices
   InstallUpstart
-  SetupMshUser
+  SetupMojinUser
   SyncPackages
 else
   echo -e "\n${red}INFO: Invalid install option. Exiting. ${NC}\n"
