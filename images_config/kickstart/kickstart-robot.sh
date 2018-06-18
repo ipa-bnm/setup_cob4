@@ -378,6 +378,12 @@ function NonInteractiveFSCKFIX {
     fi
 }
 
+function ConfigureDefaultSoundcard {
+    printHeader "ConfigureDefaultSoundcard"
+    apt-get install alsa-base alsa-config alsa-tools
+    sed -i 's/options snd-usb-audio index=-2/options snd-usb-audio index=0/g' /etc/modprobe.d/alsa-base.conf
+}
+
 function InstallAptCacher {
     printHeader "InstallAptCacher"
     #disable local forward to 10.0.1.1 cacher
@@ -488,6 +494,7 @@ RemoveModemanager
 DisableUpdatePopup
 DisableFailsafeBoot
 NonInteractiveFSCKFIX
+ConfigureDefaultSoundcard
 InstallRealsense
 InstallCareOBot
 InstallAptCacher
