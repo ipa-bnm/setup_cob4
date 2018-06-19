@@ -83,7 +83,7 @@ function install_dependencies {
         echo "executing 'rosdep install', please enter robot password"
         su robot -c "
         source $chained_ws
-        rosdep install --from-path src -i -y"
+        rosdep install --as-root pip:true --from-path src -i -y"
     elif [ "$mode" == "local" ]; then
         sudo whoami
         if [ $? -eq 0 ]; then # only execute if user has sudo rights
@@ -116,20 +116,8 @@ else
     echo "using mode: $mode"
 fi
 
-# we'll store the current execution path to find the rosinstall files for all workspaces
-setup_dir=$PWD
-
 # check if ROS_DISTRO is sourced
 : ${ROS_DISTRO:?"not sourced"}
-
-rosinstall_app_ws="$setup_dir/setup_app_ws_$2_${ROS_DISTRO}.rosinstall"
-
-if [[ -f $rosinstall_app_ws ]]; then
-    echo "setting up app_ws for $2"
-else
-    echo "ERROR: rosinstall file for app_ws $2 not found ($rosinstall_app_ws)"
-    exit 3
-fi
 
 if [ "$mode" == "robot" ]; then
     echo "Installation on robot!"
@@ -137,6 +125,7 @@ if [ "$mode" == "robot" ]; then
     su robot -c "rosdep update"
     su robot -c "sudo apt-get update"
     su robot -c "sudo apt-get upgrade"
+    setup_dir=/u/robot/git/setup_cob4/workspace_tools
     export setup_dir
     export -f setup_ws
     export -f install_dependencies
@@ -153,10 +142,20 @@ elif [ "$mode" == "local" ]; then
     else
         echo "WARN: skipping apt-get upgrade because user does not have sudo rights"
     fi
+    setup_dir=$PWD
     setup_ws ~/git/robot_ws /opt/ros/${ROS_DISTRO}/setup.bash
     setup_ws ~/git/nav_ws ~/git/robot_ws/devel/setup.bash
 else
     echo "ERROR: invalid mode: $mode"
+    exit 3
+fi
+
+rosinstall_app_ws="$setup_dir/setup_app_ws_$2_${ROS_DISTRO}.rosinstall"
+
+if [[ -f $rosinstall_app_ws ]]; then
+    echo "setting up app_ws for $2"
+else
+    echo "ERROR: rosinstall file for app_ws $2 not found ($rosinstall_app_ws)"
     exit 3
 fi
 

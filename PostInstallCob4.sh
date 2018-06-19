@@ -12,8 +12,8 @@ INFO: This script is a helper tool for the setup and installation of Care-O-bot:
 3. Setup mimic user\n
 4. Setup devices (e.g. udev for laser scanners)\n
 5. Install upstart\n
-6. Setup msh user and ROS workspace\n
-7. SyncPackages
+6. Setup mojin user and ROS workspace\n
+7. SyncPackages\n
 99. Full installation\n
 EOF
 )
@@ -48,6 +48,10 @@ fi
 
 #### retrieve client_list variables
 source /u/robot/git/setup_cob4/helper_client_list.sh
+
+function get_search_domain () {
+  grep search /etc/resolv.conf | sed -e "s/search //"
+}
 
 #### DEFINE SPECIFIC LIST OF PCs
 function query_pc_list {
@@ -140,7 +144,7 @@ function SetupRobotUser {
 function SetupMimicUser {
   echo -e "\n${green}INFO:Setup Mimic User${NC}\n"
 
-  query_pc_list "$robot_name-h1"
+  query_pc_list "h1"
   pc_head=$LIST
   if [ -z "$pc_head" ]; then
     echo "no head pc, skipping setup mimic user"
@@ -226,19 +230,19 @@ EOF"
   echo "setup mimic user done"
 }
 
-#### SETUP MSH USER
-function SetupMshUser {
-  echo -e "\n${green}INFO:Setup MSH User${NC}\n"
+#### SETUP MOJIN USER
+function SetupMojinUser {
+  echo -e "\n${green}INFO:Setup Mojin User${NC}\n"
 
   #add the new user
-  /u/robot/git/setup_cob4/cob-adduser msh
+  /u/robot/git/setup_cob4/cob-adduser mojin
 
   #setup workspace
   echo -e "\nWhat app_ws would you like to install? (msh/hdg)?"
   read answer
-  su msh -c "/u/robot/git/setup_cob4/workspace_tools/setup_workspaces.sh robot $answer"
+  su mojin -c "/u/robot/git/setup_cob4/workspace_tools/setup_workspaces.sh robot $answer"
 
-  echo "setup msh user done"
+  echo "setup mojin user done"
 }
 
 #### INSTALL UPSTART
@@ -391,7 +395,7 @@ function SyncPackages {
 if [[ "$1" =~ "--help" ]]; then echo -e $usage; exit 0; fi
 
 #### check prerequisites
-robot_name="${HOSTNAME//-b1}"
+robot_name=$(get_search_domain)
 ros_distro='indigo'
 if [ $(lsb_release -sc) == "trusty" ]; then
   ros_distro='indigo'
@@ -424,7 +428,15 @@ if [ ! -d /u/robot/git/setup_cob4 ]; then
   mkdir /u/robot/git
   git clone https://github.com/mojin-robotics/setup_cob4 /u/robot/git/setup_cob4
 else
-  git --work-tree=/u/robot/git/setup_cob4 --git-dir=/u/robot/git/setup_cob4/.git pull origin master
+  echo -e "\nDo you want to pull setup_cob4 from mojin-robotics master branch (y/n)?"
+  read answer
+
+  if echo "$answer" | grep -iq "^y" ;then
+    echo -e "\nUpdating setup_cob4 from mojin-robotics master branch..."
+    git --work-tree=/u/robot/git/setup_cob4 --git-dir=/u/robot/git/setup_cob4/.git pull https://github.com/mojin-robotics/setup_cob4 master
+  else
+    echo -e "\nNot updating setup_cob4"
+  fi
 fi
 
 
@@ -446,8 +458,8 @@ elif [[ "$choice" == 4 ]]; then
 elif [[ "$choice" == 5 ]]; then
   InstallUpstart
 elif [[ "$choice" == 6 ]]; then
-  SetupMshUser
-elif [[ "$choice" == 7 ]]: then
+  SetupMojinUser
+elif [[ "$choice" == 7 ]]; then
   SyncPackages
 elif [[ "$choice" == 99 ]]; then
   SetupRootUser
@@ -455,7 +467,7 @@ elif [[ "$choice" == 99 ]]; then
   SetupMimicUser
   SetupDevices
   InstallUpstart
-  SetupMshUser
+  SetupMojinUser
   SyncPackages
 else
   echo -e "\n${red}INFO: Invalid install option. Exiting. ${NC}\n"
