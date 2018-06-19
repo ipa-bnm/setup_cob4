@@ -13,7 +13,7 @@ INFO: This script is a helper tool for the setup and installation of Care-O-bot:
 4. Setup devices (e.g. udev for laser scanners)\n
 5. Install upstart\n
 6. Setup mojin user and ROS workspace\n
-7. SyncPackages
+7. SyncPackages\n
 99. Full installation\n
 EOF
 )
