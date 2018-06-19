@@ -128,7 +128,7 @@ robotname='cob4-'$robotnumber
 ipaddress='10.4.'$robotnumber
 
 echo
-echo "Are you shure you like to create a new ddwrt config with the following settings"
+echo "Current Config"
 echo "RobotName: $robotname"
 echo "IPAddress: $ipaddress.1"
 if echo "$static_leases" | grep -iq "^y" ;then
@@ -141,10 +141,18 @@ if echo "$static_leases" | grep -iq "^y" ;then
     echo MAC flexisoft: $mac_flexisoft_ninetynine
 fi
 if echo "$vpn_certs" | grep -iq "^y" ;then
-    echo ca_cert: $ca_cert
-    echo pub_cert: $pub_cert
-    echo priv_cert: $priv_cert
+    echo ca_cert:
+    echo $ca_cert
+    echo
+    echo pub_cert: 
+    echo $pub_cert
+    echo
+    echo priv_cert:
+    echo $priv_cert
+    echo
 fi
+echo
+echo "Are you shure you like to create a new ddwrt config with the following settings?"
 read -p "(y/n):" choice
 
 if echo "$choice" | grep -iq "^y" ;then
