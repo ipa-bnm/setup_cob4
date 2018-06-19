@@ -85,9 +85,9 @@ sudo  mount -r -o loop ~/Downloads/ubuntu-14.04.5-server-amd64.iso ~/ubuntu_iso
 cp -r ~/ubuntu_iso ~/ubuntu_files
 chmod +w -R ~/ubuntu_files
 echo en >> ~/ubuntu_files/isolinux/lang
-cp -r ~/git/setup_cob4 ~/ubuntu_files/
-cp ~/git/setup_cob4/images_config/isolinux/txt-14.04.cfg ~/ubuntu_files/isolinux/txt.cfg
-cp ~/git/setup_cob4/images_config/initrd.gz ~/ubuntu_files/install/
+git clone https://github.com/mojin-robotics/setup_cob4 ~/ubuntu_files/setup_cob4
+cp ~/ubuntu_files/setup_cob4/images_config/isolinux/txt-14.04.cfg ~/ubuntu_files/isolinux/txt.cfg
+cp ~/ubuntu_files/setup_cob4/images_config/initrd.gz ~/ubuntu_files/install/
 mkisofs -D -r -V "Ubuntu-14.04-Care-O-bot" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ~/ubuntu-14.04-care-o-bot.iso ~/ubuntu_files
 ```
 
@@ -103,8 +103,8 @@ sudo  mount -r -o loop ~/Downloads/ubuntu-16.04.3-server-amd64.iso ~/ubuntu_iso
 cp -r ~/ubuntu_iso ~/ubuntu_files
 chmod +w -R ~/ubuntu_files
 echo en >> ~/ubuntu_files/isolinux/lang
-cp -r ~/git/setup_cob4 ~/ubuntu_files/
-cp ~/git/setup_cob4/images_config/isolinux/txt-16.04.cfg ~/ubuntu_files/isolinux/txt.cfg
+git clone https://github.com/mojin-robotics/setup_cob4 ~/ubuntu_files/setup_cob4
+cp ~/ubuntu_files/setup_cob4/images_config/isolinux/txt-16.04.cfg ~/ubuntu_files/isolinux/txt.cfg
 mkisofs -D -r -V "Ubuntu-16.04-Care-O-bot" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ~/ubuntu-16.04-care-o-bot.iso ~/ubuntu_files
 ```
 

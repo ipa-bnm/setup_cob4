@@ -11,7 +11,7 @@ packages=$(dpkg --get-selections | grep -v "deinstall" | awk '{print $1}')
 echo $packages > /tmp/package_list
 
 # get install pip packages
-sudo -H pip freeze > /u/robot/pip_freeze_master
+sudo -H pip freeze > /u/robot/.pip_freeze_master
 
 
 #### retrieve client_list variables
@@ -26,7 +26,7 @@ declare -a aptcommands=(
 
 declare -a pipcommands=(
 "sudo -H pip freeze > /tmp/pip_freeze_slave"
-"comm -23 <(sort /u/robot/pip_freeze_master) <(sort /tmp/pip_freeze_slave) > /tmp/pip_freeze_diff"
+"comm -23 <(sort /u/robot/.pip_freeze_master) <(sort /tmp/pip_freeze_slave) > /tmp/pip_freeze_diff"
 "sudo -H pip install -r /tmp/pip_freeze_diff"
 )
 
