@@ -83,7 +83,7 @@ function install_dependencies {
         echo "executing 'rosdep install', please enter robot password"
         su robot -c "
         source $chained_ws
-        rosdep install --from-path src -i -y"
+        rosdep install --as-root pip:true --from-path src -i -y"
     elif [ "$mode" == "local" ]; then
         sudo whoami
         if [ $? -eq 0 ]; then # only execute if user has sudo rights
