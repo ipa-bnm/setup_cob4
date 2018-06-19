@@ -40,6 +40,7 @@ done
 if [ "$1" != "" ]; then
 	echo "setup bash environment"
 	sudo cp /u/robot/git/setup_cob4/cob-pcs/user.bashrc /u/$1/.bashrc
+	sudo cp /u/robot/git/setup_cob4/cob-pcs/user.gitconfig /u/$1/.gitconfig
 	if [ $(lsb_release -sc) == "trusty" ]; then
 		sudo cp /u/robot/git/setup_cob4/cob-pcs/tmux.conf.trusty /u/$1/.tmux.conf
 		sudo chown $1:$1 /u/$1/.tmux.conf	
@@ -54,6 +55,9 @@ if [ "$1" != "" ]; then
 	sudo sed -i "s/myrobotip/$robot_ip/g" /u/$1/.bashrc # needs to be replaced before myrobot!
 	sudo sed -i "s/myrobot/$robot_name/g" /u/$1/.bashrc
 	sudo sed -i "s/mydistro/$ROS_DISTRO/g" /u/$1/.bashrc
+
+	sudo sed -i "s/myuser/$1/g" /u/$1/.gitconfig
+	sudo sed -i "s/myrobot/$robot_name/g" /u/$1/.gitconfig
 
 	if [ ! -f /u/$1/.ssh/id_rsa ]; then
 		echo "create new ssh key"
